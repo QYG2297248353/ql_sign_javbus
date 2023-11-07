@@ -66,6 +66,4 @@ if __name__ == '__main__':
     envs = export_envs()
     print('导出变量：' + envs)
 
-    # 全局变量
-    global sign_err_count
     sign(sign_err_count)

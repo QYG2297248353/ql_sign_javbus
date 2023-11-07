@@ -5,7 +5,10 @@ import requests
 
 # 青龙面板地址
 ql_path = os.environ.get('QL_PATH')
-ql_url = 'http://127.0.0.1:5700' + ql_path
+ql_url = 'http://127.0.0.1:5700'
+if ql_path:
+    # 拼接青龙面板地址 ql_url + ql_path
+    ql_url = ql_url + ql_path
 
 # 青龙面板授权码
 ql_key = os.environ.get('QL_KEY')

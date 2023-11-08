@@ -36,9 +36,10 @@ cookie = ''
 # 签到次数
 sign_err_count = 0
 
-
 # 签到
-def sign(sign_count=0):
+def sign():
+    # 全局变量
+    global sign_err_count
     url = base_url
     # cookies 存在则使用cookies
     if cookie:
@@ -69,9 +70,9 @@ def sign(sign_count=0):
         for i in range(5, 0, -1):
             print(f'重新签到倒计时：{i} 秒')
             time.sleep(1)
-        if sign_count < 10:
-            sign_count += 1
-            sign(sign_count)
+        if sign_err_count < 10:
+            sign_err_count += 1
+            sign()
         else:
             print('Tip：签到失败，退出程序！')
             exit()
@@ -106,4 +107,4 @@ if __name__ == '__main__':
         if javbus_sign_data['date'] == f'{time.strftime("%Y-%m-%d", time.localtime())}':
             print('Tip：今天已经签到过了！')
             exit()
-    sign(sign_err_count)
+    sign()

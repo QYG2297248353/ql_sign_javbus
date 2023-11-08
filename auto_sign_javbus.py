@@ -36,6 +36,7 @@ cookie = ''
 # 签到次数
 sign_err_count = 0
 
+
 # 签到
 def sign():
     # 全局变量
@@ -84,6 +85,7 @@ def validation_initialization_parameters():
         print('请设置环境变量!!!')
         print('请参考文档: https://github.com/QYG2297248353/ql_sign_javbus')
         exit()
+    print("==========环境检查通过==========")
     # 尝试恢复cookie
     global cookie
     # 读取环境变量
@@ -91,9 +93,11 @@ def validation_initialization_parameters():
     if javbus_cookie:
         cookie = javbus_cookie
         headers['Cookie'] = cookie
+        print("==========历史 Cookie 恢复完成==========")
 
 
 if __name__ == '__main__':
+    print('初始化: 环境检查')
     validation_initialization_parameters()
     javbus_sign = get_env('javbus_sign')
     if javbus_sign == None:
@@ -102,9 +106,11 @@ if __name__ == '__main__':
             'date': f'{time.strftime("%Y-%m-%d", time.localtime())}'
         }
         add_env('javbus_sign', json.dumps(javbus_sign_data))
+        print("Tip：首次使用，添加默认记录，签到中...")
     else:
         javbus_sign_data = json.loads(javbus_sign)
         if javbus_sign_data['date'] == f'{time.strftime("%Y-%m-%d", time.localtime())}':
             print('Tip：今天已经签到过了！')
             exit()
+        print("Tip：今日未签到，开始签到...")
     sign()

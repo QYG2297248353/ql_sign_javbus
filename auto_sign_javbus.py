@@ -96,21 +96,21 @@ def validation_initialization_parameters():
         print("==========历史 Cookie 恢复完成==========")
 
 
-if __name__ == '__main__':
-    print('初始化: 环境检查')
-    validation_initialization_parameters()
-    javbus_sign = get_env('javbus_sign')
-    if javbus_sign == None:
-        javbus_sign_data = {
-            'sign': False,
-            'date': f'{time.strftime("%Y-%m-%d", time.localtime())}'
-        }
-        add_env('javbus_sign', json.dumps(javbus_sign_data))
-        print("Tip：首次使用，添加默认记录，签到中...")
-    else:
-        javbus_sign_data = json.loads(javbus_sign)
-        if javbus_sign_data['date'] == f'{time.strftime("%Y-%m-%d", time.localtime())}':
-            print('Tip：今天已经签到过了！')
-            exit()
-        print("Tip：今日未签到，开始签到...")
-    sign()
+
+print('初始化: 环境检查')
+validation_initialization_parameters()
+javbus_sign = get_env('javbus_sign')
+if javbus_sign == None:
+    javbus_sign_data = {
+        'sign': False,
+        'date': f'{time.strftime("%Y-%m-%d", time.localtime())}'
+    }
+    add_env('javbus_sign', json.dumps(javbus_sign_data))
+    print("Tip：首次使用，添加默认记录，签到中...")
+else:
+    javbus_sign_data = json.loads(javbus_sign)
+    if javbus_sign_data['date'] == f'{time.strftime("%Y-%m-%d", time.localtime())}':
+        print('Tip：今天已经签到过了！')
+        exit()
+    print("Tip：今日未签到，开始签到...")
+sign()

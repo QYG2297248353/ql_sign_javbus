@@ -1,23 +1,31 @@
-# Base Url
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+File: auto_sign_javbus.py
+Author: 萌森工作室
+Date: 2023/11/08
+cron: 0 2 * * *
+new Env('JavBus论坛签到');
+Description: 论坛自动签到-每天签到获取里程和积分
+Update: 2023/11/08
+"""
 import os
 import time
 
 import requests as requests
 from bs4 import BeautifulSoup
 
-from qlApi import export_envs
-
 base_url = 'https://www.javbus.com/forum/'
 
 # 通过环境变量获取Cookie 用于登录
-saltkey = os.environ.get('4fJN_2132_saltkey')
-auth = os.environ.get('4fJN_2132_auth')
+salt_key = os.environ.get('javbus_saltkey')
+auth = os.environ.get('javbus_auth')
 username = os.environ.get('javbus_username')
 
 # 请求页面
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
-    'Cookie': f'saltkey={saltkey};auth={auth};'
+    'Cookie': f'saltkey={salt_key};auth={auth};'
 }
 
 # 签到次数
@@ -60,10 +68,5 @@ def sign(sign_count=0):
             exit()
 
 
-# 程序入口
 if __name__ == '__main__':
-    # 获取青龙面板环境变量
-    envs = export_envs()
-    print('导出变量：' + envs)
-
     sign(sign_err_count)

@@ -24,7 +24,8 @@ def get_token():
 def init():
     # 检查环境变量
     if not client_id or not client_secret:
-        print('请设置环境变量')
+        print('请设置环境变量!!!')
+        print('请参考文档: https://github.com/QYG2297248353/ql_sign_javbus')
         exit()
     # 获取token
     token = get_token()
@@ -99,7 +100,7 @@ def delete(url):
         exit()
 
 
-def delete(url, data):
+def delete_data(url, data):
     res = requests.delete(url, headers=headers, json=data)
     json = res.json()
     if json['code'] == 200:
@@ -107,7 +108,7 @@ def delete(url, data):
     # 如果token过期则重新获取token
     elif json['code'] == 401:
         headers['Authorization'] = f"Bearer {get_token()}"
-        return delete(url)
+        return delete_data(url, data)
     else:
         print(json)
         exit()
@@ -161,7 +162,7 @@ def add_env(name, value):
 
 
 # 添加环境变量
-def add_env(name, value, remarks):
+def add_full_env(name, value, remarks):
     url = f'{api_url}/envs'
     data = [
         {
@@ -180,5 +181,5 @@ def delete_env(name):
     data = [
         get_env(name)['id']
     ]
-    res = delete(url, data)
+    res = delete_data(url, data)
     return res.json()

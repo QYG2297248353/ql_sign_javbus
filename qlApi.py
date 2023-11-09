@@ -13,6 +13,9 @@ client_secret = os.environ.get('CLIENT_SECRET')  # 获取client_secret
 open_url = 'http://127.0.0.1:5700/open'
 api_url = 'http://127.0.0.1:5700/api'
 
+# headers
+headers = {}
+
 
 # 获取Token
 def get_token():
@@ -34,6 +37,7 @@ def get_token():
 
 # 初始化
 def init():
+    global headers
     # 检查环境变量
     if not client_id or not client_secret:
         print('请设置环境变量!!!')
@@ -45,11 +49,9 @@ def init():
     headers = {
         "Authorization": f"Bearer {token}"
     }
-    return headers
 
 
-# headers
-headers = init()
+init()
 
 
 # Get请求

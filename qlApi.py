@@ -10,14 +10,16 @@ client_id = os.environ.get('CLIENT_ID')  # 获取client_id
 client_secret = os.environ.get('CLIENT_SECRET')  # 获取client_secret
 
 # api地址
-open_url = 'http://10.95.182.221:5700/open'
-api_url = 'http://10.95.182.221:5700/api'
+open_url = 'http://127.0.0.1:5700/open'
+api_url = 'http://127.0.0.1:5700/api'
 
 
 # 获取Token
 def get_token():
+    print("获取授权码")
     url = f'{open_url}/auth/token?client_id={client_id}&client_secret={client_secret}'
-    res = requests.get(url)
+    print("请求地址：" + url)
+    res = get(url)
     return res.json()['data']['token']
 
 
@@ -39,7 +41,6 @@ def init():
 
 # headers
 headers = init()
-
 
 # Get请求
 def get(url):
@@ -115,15 +116,12 @@ def delete_data(url, data):
         exit()
 
 
+
 # 获取全部环境变量
 def get_envs():
     url = f'{api_url}/envs'
     res = get(url)
     return res.json()['data']
-
-
-# envs
-envs = get_envs()
 
 
 # 获取单个环境变量

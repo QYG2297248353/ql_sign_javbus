@@ -51,9 +51,6 @@ def init():
     }
 
 
-init()
-
-
 # Get请求
 def get(url):
     res = requests.get(url, headers=headers)

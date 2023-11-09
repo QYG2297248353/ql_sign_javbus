@@ -13,8 +13,8 @@ client_id = os.environ.get('CLIENT_ID')  # 获取client_id
 client_secret = os.environ.get('CLIENT_SECRET')  # 获取client_secret
 
 # api地址
-open_url = 'http://10.95.182.221:5700/open'
-api_url = 'http://10.95.182.221:5700/api'
+open_url = 'http://127.0.0.1:5700/open'
+api_url = 'http://127.0.0.1:5700/api'
 
 
 # 获取Token

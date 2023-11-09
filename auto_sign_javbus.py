@@ -16,7 +16,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-from qlApi import get_env, add_env, update_env, get_token
+from qlApi import get_env, add_env, update_env, get_token, add_update_env
 from notify import print
 
 base_url = 'https://www.javbus.com/forum/'
@@ -59,7 +59,7 @@ def sign():
         if a:
             # cookie 处理 解析为字典 用于保存 不能使用utils.dict_from_cookiejar
             cookies_envs = json.dumps(requests.utils.dict_from_cookiejar(response.cookies))
-            add_env('javbus_cookie', cookies_envs)
+            add_update_env('javbus_cookie', cookies_envs)
             print('Tip：账户已登录，签到中...')
             javbus_sign_data = {
                 'sign': True,

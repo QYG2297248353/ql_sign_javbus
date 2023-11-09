@@ -156,6 +156,11 @@ def add_env(name, value):
     res = post(url, data)
     return res
 
+def add_update_env(name, value):
+    if get_env(name):
+        update_env(name, value)
+    else:
+        add_env(name, value)
 
 # 添加环境变量
 def add_full_env(name, value, remarks):

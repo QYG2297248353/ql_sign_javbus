@@ -19,7 +19,16 @@ def get_token():
     print("获取授权码")
     url = f'{open_url}/auth/token?client_id={client_id}&client_secret={client_secret}'
     print("请求地址：" + url)
-    res = get(url)
+    res = requests.get(url)
+    if res.status_code != 200:
+        print("请求失败：请检查网络配置")
+        print(res.json())
+        exit()
+    resp_data = res.json()
+    if resp_data['code'] != 200:
+        print("获取授权码失败")
+        print(resp_data)
+        exit()
     return res.json()['data']['token']
 
 
@@ -41,6 +50,7 @@ def init():
 
 # headers
 headers = init()
+
 
 # Get请求
 def get(url):
@@ -114,7 +124,6 @@ def delete_data(url, data):
     else:
         print(json)
         exit()
-
 
 
 # 获取全部环境变量

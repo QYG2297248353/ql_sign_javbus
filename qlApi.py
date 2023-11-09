@@ -3,6 +3,7 @@
 import os
 
 import requests
+from notify import print
 
 # 环境变量
 client_id = os.environ.get('CLIENT_ID')  # 获取client_id

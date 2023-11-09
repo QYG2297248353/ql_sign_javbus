@@ -15,5 +15,5 @@ beautifulsoup4
 
 ###### 一键订阅
 ```bash
-ql repo https://github.com/QYG2297248353/ql_sign_javbus.git
+ql repo https://github.com/QYG2297248353/ql_sign_javbus.git "auto_sign_javbus" "" "qlApi"
 ```

@@ -17,6 +17,7 @@ import requests as requests
 from bs4 import BeautifulSoup
 
 from qlApi import init, get_env, add_env, update_env
+from notify import print
 
 base_url = 'https://www.javbus.com/forum/'
 

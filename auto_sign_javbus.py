@@ -20,6 +20,11 @@ from qlApi import get_env, add_env, update_env, get_token, add_update_env
 from notify import print
 
 base_url = 'https://www.javbus.com/forum/'
+# 环境替换地址
+env_base_url = os.environ.get('javbus_sign_url')
+if env_base_url:
+    print('Tip：检测到自定义地址，使用自定义地址')
+    base_url = env_base_url
 
 # 通过环境变量获取Cookie 用于登录
 salt_key = os.environ.get('javbus_saltkey')
@@ -36,6 +41,29 @@ cookie = ''
 # 签到次数
 sign_err_count = 0
 
+# 代理配置
+proxies_enable = os.environ.get('proxies_enable') if os.environ.get('proxies_enable') else 'false'
+proxies_host = os.environ.get('proxies_host')
+proxies_port = os.environ.get('proxies_port')
+proxies_username = os.environ.get('proxies_username')
+proxies_password = os.environ.get('proxies_password')
+
+# 代理 构建
+proxies = {}
+
+if proxies_enable == 'true':
+    # 使用用户名和密码认证的代理需要使用 HTTPBasicAuth 进行认证
+    if proxies_username and proxies_password:
+        proxies = {
+            'http': f'http://{proxies_username}:{proxies_password}@{proxies_host}:{proxies_port}',
+            'https': f'http://{proxies_username}:{proxies_password}@{proxies_host}:{proxies_port}'
+        }
+    else:
+        proxies = {
+            'http': f'http://{proxies_host}:{proxies_port}',
+            'https': f'http://{proxies_host}:{proxies_port}'
+        }
+
 
 # 签到
 def sign():
@@ -46,10 +74,18 @@ def sign():
     headers['Cookie'] = f'4fJN_2132_saltkey={salt_key};4fJN_2132_auth={auth}'
     if cookie:
         print('Tip：使用历史 Cookie 签到')
-        response = requests.get(url, headers=headers, cookies=cookie)
+        if proxies:
+            print('Tip：检测到代理配置：' + str(proxies))
+            response = requests.get(url, headers=headers, cookies=cookie, proxies=proxies)
+        else:
+            response = requests.get(url, headers=headers, cookies=cookie)
     else:
         print('Tip：使用环境变量 Cookie 签到')
-        response = requests.get(url, headers=headers)
+        if proxies:
+            print('Tip：检测到代理配置：' + str(proxies))
+            response = requests.get(url, headers=headers, proxies=proxies)
+        else:
+            response = requests.get(url, headers=headers)
     if response.status_code == 200:
         print('开始解析: 签到结果')
         soup = BeautifulSoup(response.text, 'html.parser')

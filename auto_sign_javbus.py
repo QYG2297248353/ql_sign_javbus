@@ -22,9 +22,6 @@ from notify import print
 base_url = 'https://www.javbus.com/forum/'
 # 环境替换地址
 env_base_url = os.environ.get('javbus_sign_url')
-if env_base_url:
-    print('Tip：检测到自定义地址，使用自定义地址')
-    base_url = env_base_url
 
 # 通过环境变量获取Cookie 用于登录
 salt_key = os.environ.get('javbus_saltkey')
@@ -68,7 +65,10 @@ if proxies_enable == 'true':
 # 签到
 def sign():
     # 全局变量
-    global sign_err_count
+    global sign_err_count, base_url
+    if env_base_url:
+        print('Tip：检测到自定义地址，使用自定义地址')
+        base_url = env_base_url
     url = base_url
     # cookies 存在则使用cookies
     headers['Cookie'] = f'4fJN_2132_saltkey={salt_key};4fJN_2132_auth={auth}'

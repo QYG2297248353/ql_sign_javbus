@@ -20,6 +20,10 @@ beautifulsoup4
 | javbus_username | 用户名                                     | YES  | 效验签到用户                           |
 | javbus_sign     | 签到记录                                   | 可选 | 自动生成记录                           |
 | javbus_cookie   | 自动续期                                   | 可选 | 自动生成刷新记录                       |
+| proxies_enable  | 开启代理                                   | 可选 | 默认 false，可选 true,false            |
+| proxies_host    | 代理主机                                   | 可选 | ip 示例：127.0.0.1                     |
+| proxies_port    | 代理端口                                   | 可选 | 7890                                   |
+| env_base_url    | 签到地址                                   | 可选 | https://{{镜像地址}}.com/forum/        |
 
 + 获取加密盐
 

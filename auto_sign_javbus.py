@@ -72,20 +72,34 @@ def sign():
     url = base_url
     # cookies 存在则使用cookies
     headers['Cookie'] = f'4fJN_2132_saltkey={salt_key};4fJN_2132_auth={auth}'
-    if cookie:
-        print('Tip：使用历史 Cookie 签到')
-        if proxies:
-            print('Tip：检测到代理配置：' + str(proxies))
-            response = requests.get(url, headers=headers, cookies=cookie, proxies=proxies)
+    try:
+        if cookie:
+            print('Tip：使用历史 Cookie 签到')
+            if proxies:
+                print('Tip：检测到代理配置：' + str(proxies))
+                response = requests.get(url, headers=headers, cookies=cookie, proxies=proxies)
+            else:
+                response = requests.get(url, headers=headers, cookies=cookie)
         else:
-            response = requests.get(url, headers=headers, cookies=cookie)
-    else:
-        print('Tip：使用环境变量 Cookie 签到')
-        if proxies:
-            print('Tip：检测到代理配置：' + str(proxies))
-            response = requests.get(url, headers=headers, proxies=proxies)
+            print('Tip：使用环境变量 Cookie 签到')
+            if proxies:
+                print('Tip：检测到代理配置：' + str(proxies))
+                response = requests.get(url, headers=headers, proxies=proxies)
+            else:
+                response = requests.get(url, headers=headers)
+    # 请求超时
+    except requests.exceptions.Timeout:
+        print('Tip：请求超时，尝试重新签到')
+        for i in range(5, 0, -1):
+            print(f'重新签到倒计时：{i} 秒')
+            time.sleep(1)
+        if sign_err_count < 10:
+            sign_err_count += 1
+            sign()
         else:
-            response = requests.get(url, headers=headers)
+            print('Tip：签到失败，退出程序！')
+            exit()
+
     if response.status_code == 200:
         print('开始解析: 签到结果')
         soup = BeautifulSoup(response.text, 'html.parser')

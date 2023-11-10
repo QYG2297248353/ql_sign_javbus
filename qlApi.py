@@ -20,9 +20,8 @@ api_url = 'http://127.0.0.1:5700/api'
 # 获取Token
 def get_token():
     global app_headers
-    print("获取授权码")
+    print("更新青龙授权码")
     url = f'{open_url}/auth/token?client_id={client_id}&client_secret={client_secret}'
-    print("请求地址：" + url)
     res = requests.get(url)
     if res.status_code != 200:
         print("请求失败：请检查网络配置")
@@ -36,7 +35,7 @@ def get_token():
     app_headers = {
         "Authorization": f"Bearer {res.json()['data']['token']}"
     }
-    print("获取授权码成功")
+    print("获取授权码成功：")
     print(app_headers)
 
 

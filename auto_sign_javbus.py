@@ -45,8 +45,10 @@ def sign():
     # cookies 存在则使用cookies
     headers['Cookie'] = f'4fJN_2132_saltkey={salt_key};4fJN_2132_auth={auth}'
     if cookie:
+        print('Tip：使用历史 Cookie 签到')
         response = requests.get(url, headers=headers, cookies=cookie)
     else:
+        print('Tip：使用环境变量 Cookie 签到')
         response = requests.get(url, headers=headers)
     if response.status_code == 200:
         print('开始解析: 签到结果')

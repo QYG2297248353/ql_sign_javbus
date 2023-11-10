@@ -126,6 +126,5 @@ else:
         if javbus_sign_save['sign']:
             print("Tip：今日已签到，无需重复签到")
             exit()
-        else:
-            print("Tip：今日未签到，开始签到...")
-            sign()
+    print("Tip：今日未签到，开始签到...")
+    sign()

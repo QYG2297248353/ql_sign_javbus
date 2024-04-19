@@ -55,5 +55,5 @@ document.cookie.match(/4fJN_2132_auth=([^;]+)/)[1];
 ## 一键订阅
 
 ```bash
-ql repo https://github.com/QYG2297248353/ql_sign_javbus.git "auto_sign_javbus" "" "qlApi"
+ql repo https://github.com/QYG2297248353/ql_sign_javbus.git "auto_" "" "__init__|core_|utils_"
 ```

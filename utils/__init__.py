@@ -3,6 +3,7 @@ import os
 
 import requests
 
+logging.info('[青龙] 开始加载配置文件')
 OPEN_URL = ''
 
 API_URL = ''
@@ -58,3 +59,5 @@ def get_authorization():
 
 
 get_authorization()
+
+logging.info('[青龙] 加载配置文件完成')

@@ -86,7 +86,7 @@ def delete_data(url, data):
     """
     Delete请求
     """
-    res = requests.delete(url, headers=QL_HEADERS, json=data, timeout=60)
+    res = requests.delete(url, headers=QL_HEADERS, json=data, timeout=60     )
     if res.status_code != 200:
         logging.error(f"请求失败，状态码：{res.status_code}")
         exit(1)

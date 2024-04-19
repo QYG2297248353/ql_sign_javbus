@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from core import SALT_KEY, AUTH, USERNAME, JAVBUS_RECORD_PATH, JAVBUS_COOKIES, JAVBUS_BASE_URL, JAVBUS_HEADERS, PROXIES, \
     JAVBUS_COOKIE
 from notify import send
-from utils.util_ql_api import add_update_env
+from utils.utils_ql_api import add_update_env
 
 cookies = None
 

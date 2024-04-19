@@ -4,6 +4,8 @@ import os
 
 import requests
 
+logging.info('[JavBus] 开始加载配置文件')
+
 JAVBUS_BASE_URL = 'https://www.javbus.com/forum/'
 
 JAVBUS_HEADERS = {
@@ -57,3 +59,5 @@ if PROXY_ENABLE:
     logging.info('[JavBus] 代理配置完成')
 
 JAVBUS_RECORD_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'record')
+
+logging.info('[JavBus] 配置文件加载完成')

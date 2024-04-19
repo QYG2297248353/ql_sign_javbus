@@ -5,6 +5,8 @@ import os
 
 import requests
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
 logging.info('[JavBus] 开始加载配置文件')
 
 JAVBUS_BASE_URL = 'https://www.javbus.com/forum/'

@@ -58,7 +58,4 @@ def get_authorization():
 
     return QL_HEADERS
 
-
-get_authorization()
-
 logging.info('[青龙] 加载配置文件完成')

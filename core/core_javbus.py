@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from core import SALT_KEY, AUTH, USERNAME, JAVBUS_RECORD_PATH, JAVBUS_COOKIES, JAVBUS_BASE_URL, JAVBUS_HEADERS, PROXIES, \
     JAVBUS_COOKIE
 from notify import send
+from utils import get_authorization
 from utils.utils_ql_api import add_update_env
 
 cookies = None
@@ -70,6 +71,7 @@ def count_mouth_signed():
 
 
 def init_env_param():
+    get_authorization()
     logging.info('[JavBus] 初始化环境变量')
     if not SALT_KEY or not AUTH or not USERNAME:
         print('[JavBus] 无法读取环境变量, 请参考文档: https://github.com/QYG2297248353/ql_sign_javbus')

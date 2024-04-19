@@ -1,13 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-File: auto_sign_javbus.py
-Author: 萌森工作室
-Date: 2023/11/08
-cron: 0 2 * * *
-new Env('JavBus论坛签到');
-Description: 论坛自动签到-每天签到获取里程和积分
-Update: 2023/11/08
-"""
 import logging
 
 from core.core_javbus import auto_sign_javbus

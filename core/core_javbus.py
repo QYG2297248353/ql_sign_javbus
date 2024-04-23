@@ -10,8 +10,7 @@ from bs4 import BeautifulSoup
 from core import SALT_KEY, AUTH, USERNAME, JAVBUS_RECORD_PATH, JAVBUS_COOKIES, JAVBUS_BASE_URL, JAVBUS_HEADERS, PROXIES, \
     JAVBUS_COOKIE
 from notify import send
-from utils import get_authorization
-from utils.utils_ql_api import add_update_env
+from utils.utils_ql_api import add_update_env, get_authorization
 
 cookies = None
 
@@ -108,13 +107,13 @@ def sign(retry=10):
             return
         has_username = soup.find('a', string=USERNAME)
         if has_username:
+            logging.info('[JavBus] 签到成功')
             cookies_envs = json.dumps(requests.utils.dict_from_cookiejar(response.cookies))
             add_update_env('javbus_auto_cookie', cookies_envs)
             sign_today()
-            logging.info('[JavBus] 签到成功')
         else:
-            sign_today(False)
             logging.warning('[JavBus] 签到失败')
+            sign_today(False)
     else:
         logging.warning(f'[JavBus] 请求状态码异常： {response.status_code}')
         for i in range(5, 0, -1):

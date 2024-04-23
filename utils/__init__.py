@@ -33,29 +33,4 @@ if ql_base_url:
 CLIENT_ID = os.environ.get('javbus_client_id')
 CLIENT_SECRET = os.environ.get('javbus_client_secret')
 
-QL_HEADERS = None
-
-
-def get_authorization():
-    """
-    获取Token
-    """
-    global QL_HEADERS
-    logging.info("[青龙] 刷新授权码")
-    url = f'{OPEN_URL}/auth/token?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}'
-    res = requests.get(url, timeout=60)
-    if res.status_code != 200:
-        logging.info("[青龙] 请检查网络配置, 状态码：{}".format(res.status_code))
-        exit(1)
-    resp_data = res.json()
-    if resp_data['code'] != 200:
-        logging.info("[青龙] 获取授权码失败, 响应：{}".format(resp_data))
-        exit(1)
-    QL_HEADERS = {
-        "Authorization": f"Bearer {res.json()['data']['token']}"
-    }
-    logging.info("[青龙] 授权码：{}".format(QL_HEADERS['Authorization']))
-
-    return QL_HEADERS
-
 logging.info('[青龙] 加载配置文件完成')

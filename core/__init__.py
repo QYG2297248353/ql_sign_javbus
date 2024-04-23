@@ -18,21 +18,17 @@ JAVBUS_HEADERS = {
     'Connection': 'keep-alive'
 }
 
-# 环境变量中的cookie
 JAVBUS_COOKIES = None
 
-# 环境变量中的格式化cookie
-JAVBUS_ENV_COOKIES = None
-
-JAVBUS_COOKIE = bool(os.environ.get('javbus_cookie', False))
+JAVBUS_COOKIE = bool(os.environ.get('javbus_cookie', True))
 if JAVBUS_COOKIE:
-    JAVBUS_ENV_COOKIES = os.environ.get('javbus_auto_cookie', None)
-if JAVBUS_ENV_COOKIES:
-    logging.info('[JavBus] 检测到历史Cookie')
-    env_cookie = json.loads(JAVBUS_ENV_COOKIES)
-    JAVBUS_COOKIES = requests.utils.cookiejar_from_dict(env_cookie)
-    logging.info('[JavBus] 恢复历史Cookie完成')
-    JAVBUS_HEADERS['Cookie'] = JAVBUS_COOKIES
+    env_cookie = os.environ.get('javbus_auto_cookie', None)
+    if env_cookie:
+        logging.info('[JavBus] 检测到历史Cookie')
+        env_cookie = json.loads(env_cookie)
+        JAVBUS_COOKIES = requests.utils.cookiejar_from_dict(env_cookie)
+        logging.info('[JavBus] 恢复历史Cookie完成')
+        JAVBUS_HEADERS['Cookie'] = JAVBUS_COOKIES
 
 env_base_url = os.environ.get('javbus_sign_url', None)
 if env_base_url:

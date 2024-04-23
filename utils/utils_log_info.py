@@ -27,3 +27,20 @@ def task_end():
 
     logging.info('End at: %s', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     logging.info('Done!')
+
+
+def random_sign_time():
+    """
+    随机签到时间 分钟/秒钟
+    :return: 延迟签到时间 15分钟之内
+    """
+    import logging
+    import random
+    import time
+
+    minute = random.randint(0, 15)
+    second = random.randint(0, 59)
+
+    logging.info('Random sign time: %s minute %s second', minute, second)
+    time.sleep(minute * 60 + second)
+    logging.info('Start sign')

@@ -98,7 +98,7 @@ def sign(retry=10):
         sign(retry - 1)
 
     if response.status_code == 200:
-        print('[JavBus] 结果解析')
+        logging.info('[JavBus] 结果解析')
         soup = BeautifulSoup(response.text, 'html.parser')
         title = soup.find('title').text
         if '登錄' in title:

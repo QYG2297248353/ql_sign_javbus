@@ -12,7 +12,10 @@ logging.info('[JavBus] 开始加载配置文件')
 JAVBUS_BASE_URL = 'https://www.javbus.com/forum/'
 
 JAVBUS_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
+    'Accept': '*/*',
+    'Host': 'www.javbus.com',
+    'Connection': 'keep-alive'
 }
 
 JAVBUS_COOKIES = None

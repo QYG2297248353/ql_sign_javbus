@@ -18,41 +18,43 @@ JAVBUS_HEADERS = {
     'Connection': 'keep-alive'
 }
 
+# 环境变量中的cookie
 JAVBUS_COOKIES = None
 
+# 环境变量中的格式化cookie
 JAVBUS_ENV_COOKIES = None
 
-JAVBUS_COOKIE = bool(os.environ.get('javbus_cookie')) | True
+JAVBUS_COOKIE = bool(os.environ.get('javbus_cookie', False))
 if JAVBUS_COOKIE:
-    JAVBUS_ENV_COOKIES = os.environ.get('javbus_auto_cookie')
+    JAVBUS_ENV_COOKIES = os.environ.get('javbus_auto_cookie', None)
 if JAVBUS_ENV_COOKIES:
     logging.info('[JavBus] 检测到历史Cookie')
-    javbus_cookie = json.loads(JAVBUS_COOKIE['value'])
-    JAVBUS_COOKIES = requests.utils.cookiejar_from_dict(javbus_cookie)
+    env_cookie = json.loads(JAVBUS_ENV_COOKIES)
+    JAVBUS_COOKIES = requests.utils.cookiejar_from_dict(env_cookie)
     logging.info('[JavBus] 恢复历史Cookie完成')
     JAVBUS_HEADERS['Cookie'] = JAVBUS_COOKIES
 
-env_base_url = os.environ.get('javbus_sign_url')
+env_base_url = os.environ.get('javbus_sign_url', None)
 if env_base_url:
     JAVBUS_BASE_URL = env_base_url
 
-SALT_KEY = os.environ.get('javbus_saltkey')
-AUTH = os.environ.get('javbus_auth')
+SALT_KEY = os.environ.get('javbus_saltkey', None)
+AUTH = os.environ.get('javbus_auth', None)
 # 存在 SALT_KEY and AUTH 且 不存在 JAVBUS_COOKIES
 if SALT_KEY and AUTH and not JAVBUS_COOKIES:
     JAVBUS_HEADERS['Cookie'] = f'4fJN_2132_saltkey={SALT_KEY}; 4fJN_2132_auth={AUTH}'
     logging.info('[JavBus] 配置密钥 cookie：4fJN_2132_saltkey {} 4fJN_2132_auth {}'.format(SALT_KEY, AUTH))
 
-USERNAME = os.environ.get('javbus_username')
+USERNAME = os.environ.get('javbus_username', None)
 
-PROXY_ENABLE = bool(os.environ.get('proxy_enable')) | False
+PROXY_ENABLE = bool(os.environ.get('proxy_enable', False))
 PROXIES = None
 if PROXY_ENABLE:
     logging.info('[JavBus] 检测到代理配置')
-    proxy_host = os.environ.get('proxy_host')
-    proxy_port = os.environ.get('proxy_port')
-    proxy_username = os.environ.get('proxy_username')
-    proxy_password = os.environ.get('proxy_password')
+    proxy_host = os.environ.get('proxy_host', None)
+    proxy_port = os.environ.get('proxy_port', None)
+    proxy_username = os.environ.get('proxy_username', None)
+    proxy_password = os.environ.get('proxy_password', None)
     if proxy_username and proxy_password:
         PROXIES = {
             'http': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}',

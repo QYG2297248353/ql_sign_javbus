@@ -22,7 +22,7 @@ JAVBUS_COOKIES = None
 
 JAVBUS_ENV_COOKIES = None
 
-JAVBUS_COOKIE = bool(os.environ.get('javbus_cookie')) | False
+JAVBUS_COOKIE = bool(os.environ.get('javbus_cookie')) | True
 if JAVBUS_COOKIE:
     JAVBUS_ENV_COOKIES = os.environ.get('javbus_auto_cookie')
 if JAVBUS_ENV_COOKIES:

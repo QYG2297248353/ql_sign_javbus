@@ -86,9 +86,11 @@ def sign(retry=10):
         return None
     try:
         if JAVBUS_COOKIES:
+            logging.info('[JavBus] 历史Cookie 签到')
             response = requests.get(JAVBUS_BASE_URL, headers=JAVBUS_HEADERS, cookies=JAVBUS_COOKIES, proxies=PROXIES,
                                     timeout=60)
         else:
+            logging.info('[JavBus] 自动签到')
             response = requests.get(JAVBUS_BASE_URL, headers=JAVBUS_HEADERS, proxies=PROXIES, timeout=60)
     except Exception as e:
         logging.warning(f'[JavBus] 请求异常： {e}')
@@ -115,6 +117,9 @@ def sign(retry=10):
         else:
             logging.warning('[JavBus] 签到失败')
             sign_today(False)
+            with open(os.path.join(JAVBUS_RECORD_PATH, 'javbus.html'), 'w') as f:
+                f.write(response.text)
+                f.close()
             return None
     else:
         logging.warning(f'[JavBus] 请求状态码异常： {response.status_code}')

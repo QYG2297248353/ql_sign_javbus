@@ -25,7 +25,7 @@ if JAVBUS_COOKIE:
     env_cookie = os.environ.get('javbus_auto_cookie', None)
     if env_cookie:
         logging.info('[JavBus] 检测到历史Cookie')
-        javbus_cookie = json.loads(env_cookie['value'])
+        javbus_cookie = json.loads(env_cookie)
         JAVBUS_COOKIES = requests.utils.cookiejar_from_dict(javbus_cookie)
         logging.info('[JavBus] 恢复历史Cookie完成')
 

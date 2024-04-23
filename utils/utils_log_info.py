@@ -38,7 +38,7 @@ def random_sign_time():
     import random
     import time
 
-    minute = random.randint(0, 15)
+    minute = random.randint(0, 6)
     second = random.randint(0, 59)
 
     logging.info('Random sign time: %s minute %s second', minute, second)

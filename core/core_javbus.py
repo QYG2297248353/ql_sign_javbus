@@ -81,9 +81,9 @@ def init_env_param():
 def sign(retry=10):
     global response
     if retry == 0:
-        logging.error('[JavBus] 签到失败')
+        logging.error('[JavBus] 重试过多 签到失败')
         sign_today(False)
-        return
+        return None
     try:
         if JAVBUS_COOKIES:
             response = requests.get(JAVBUS_BASE_URL, headers=JAVBUS_HEADERS, cookies=JAVBUS_COOKIES, proxies=PROXIES,
@@ -95,7 +95,7 @@ def sign(retry=10):
         for i in range(5, 0, -1):
             print(f'[JavBus] 重新等待：{i} 秒')
             time.sleep(1)
-        sign(retry - 1)
+        return sign(retry - 1)
 
     if response.status_code == 200:
         logging.info('[JavBus] 结果解析')
@@ -104,22 +104,24 @@ def sign(retry=10):
         if '登錄' in title:
             logging.error('[JavBus] Cookie 失效，请重新获取')
             sign_today(False)
-            return
+            return None
         has_username = soup.find('a', string=USERNAME)
         if has_username:
             logging.info('[JavBus] 签到成功')
             cookies_envs = json.dumps(requests.utils.dict_from_cookiejar(response.cookies))
             add_update_env('javbus_auto_cookie', cookies_envs)
             sign_today()
+            return None
         else:
             logging.warning('[JavBus] 签到失败')
             sign_today(False)
+            return None
     else:
         logging.warning(f'[JavBus] 请求状态码异常： {response.status_code}')
         for i in range(5, 0, -1):
             print(f'[JavBus] 重新等待：{i} 秒')
             time.sleep(1)
-        sign(retry - 1)
+        return sign(retry - 1)
 
 
 def auto_sign_javbus():

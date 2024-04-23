@@ -37,7 +37,8 @@ SALT_KEY = os.environ.get('javbus_saltkey')
 AUTH = os.environ.get('javbus_auth')
 # 存在 SALT_KEY and AUTH 且 不存在 JAVBUS_COOKIES
 if SALT_KEY and AUTH and not JAVBUS_COOKIES:
-    JAVBUS_HEADERS['Cookie'] = f'4fJN_2132_saltkey={SALT_KEY};4fJN_2132_auth={AUTH}'
+    JAVBUS_HEADERS['Cookie'] = f'4fJN_2132_saltkey={SALT_KEY}; 4fJN_2132_auth={AUTH}'
+    logging.info('[JavBus] 配置密钥 cookie：4fJN_2132_saltkey {} 4fJN_2132_auth {}'.format(SALT_KEY, AUTH))
 
 USERNAME = os.environ.get('javbus_username')
 
@@ -59,7 +60,7 @@ if PROXY_ENABLE:
             'http': f'http://{proxy_host}:{proxy_port}',
             'https': f'http://{proxy_host}:{proxy_port}'
         }
-    logging.info('[JavBus] 代理配置完成')
+    logging.info('[JavBus] 代理配置完成 Host: {} Port: {}'.format(proxy_host, proxy_port))
 
 JAVBUS_RECORD_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'record')
 

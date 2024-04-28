@@ -87,6 +87,8 @@ def sign(retry=10):
     try:
         if JAVBUS_COOKIES:
             logging.info('[JavBus] 历史Cookie 签到')
+            logging.info('[调试] Headers: {}'.format(json.dumps(JAVBUS_HEADERS, indent=4, ensure_ascii=False)))
+            logging.info('[调试] Cookies: {}'.format(json.dumps(JAVBUS_COOKIES, indent=4, ensure_ascii=False)))
             response = requests.get(JAVBUS_BASE_URL, headers=JAVBUS_HEADERS, cookies=JAVBUS_COOKIES, proxies=PROXIES,
                                     timeout=60)
         else:

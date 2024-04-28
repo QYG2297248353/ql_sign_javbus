@@ -12,8 +12,6 @@ from core import SALT_KEY, AUTH, USERNAME, JAVBUS_RECORD_PATH, JAVBUS_COOKIES, J
 from notify import send
 from utils.utils_ql_api import add_update_env, get_authorization
 
-cookies = None
-
 
 def init_record_dir():
     year = time.strftime('%Y', time.localtime())
@@ -88,7 +86,7 @@ def sign(retry=10):
         if JAVBUS_COOKIES:
             logging.info('[JavBus] 历史Cookie 签到')
             logging.info('[调试] Headers: {}'.format(json.dumps(JAVBUS_HEADERS, indent=4, ensure_ascii=False)))
-            logging.info('[调试] Cookies: {}'.format(json.dumps(JAVBUS_COOKIES, indent=4, ensure_ascii=False)))
+            logging.info('[调试] Cookies: {}'.format(JAVBUS_COOKIES))
             response = requests.get(JAVBUS_BASE_URL, headers=JAVBUS_HEADERS, cookies=JAVBUS_COOKIES, proxies=PROXIES,
                                     timeout=60)
         else:

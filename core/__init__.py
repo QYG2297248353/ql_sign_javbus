@@ -26,8 +26,11 @@ if JAVBUS_COOKIE:
     if env_cookie:
         logging.info('[JavBus] 检测到历史Cookie')
         javbus_cookie = json.loads(env_cookie)
-        JAVBUS_COOKIES = requests.utils.cookiejar_from_dict(javbus_cookie)
-        logging.info('[JavBus] 恢复历史Cookie完成')
+        if '4fJN_2132_saltkey' in javbus_cookie.keys() and '4fJN_2132_auth' in javbus_cookie.keys():
+            JAVBUS_COOKIES = requests.utils.cookiejar_from_dict(javbus_cookie)
+            logging.info('[JavBus] 恢复历史Cookie完成')
+        else:
+            logging.error('[JavBus] Cookie 效验失败')
 
 env_base_url = os.environ.get('javbus_sign_url', None)
 if env_base_url:

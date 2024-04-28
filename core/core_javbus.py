@@ -85,8 +85,6 @@ def sign(retry=10):
     try:
         if JAVBUS_COOKIES:
             logging.info('[JavBus] 历史Cookie 签到')
-            logging.info('[调试] Headers: {}'.format(json.dumps(JAVBUS_HEADERS, indent=4, ensure_ascii=False)))
-            logging.info('[调试] Cookies: {}'.format(JAVBUS_COOKIES))
             response = requests.get(JAVBUS_BASE_URL, headers=JAVBUS_HEADERS, cookies=JAVBUS_COOKIES, proxies=PROXIES,
                                     timeout=60)
         else:
@@ -110,8 +108,13 @@ def sign(retry=10):
         has_username = soup.find('a', string=USERNAME)
         if has_username:
             logging.info('[JavBus] 签到成功')
-            cookies_envs = json.dumps(requests.utils.dict_from_cookiejar(response.cookies))
-            add_update_env('javbus_auto_cookie', cookies_envs)
+            cookie_dict = requests.utils.dict_from_cookiejar(response.cookies)
+            if '4fJN_2132_saltkey' in cookie_dict.keys() and '4fJN_2132_auth' in cookie_dict.keys():
+                cookies_envs = json.dumps(cookie_dict)
+                add_update_env('javbus_auto_cookie', cookies_envs)
+                logging.info('[JavBus] 保存 Cookie 完成')
+            else:
+                logging.error('[JavBus] 未找到 Cookie 中的 saltkey 和 auth')
             sign_today()
             return None
         else:

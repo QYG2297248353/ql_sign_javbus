@@ -8,6 +8,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 if __name__ == '__main__':
     task_start()
-    # random_sign_time()
+    random_sign_time()
     auto_sign_javbus()
     task_end()
